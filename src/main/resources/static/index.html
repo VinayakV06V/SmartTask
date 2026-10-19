@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTask | Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>✦ SmartTask</h2>
+        <p class="nav-active">▦ &nbsp; Dashboard</p>
+        <p>✓ &nbsp; My Tasks</p>
+        <p>◷ &nbsp; Habits</p>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <div>
+                <p class="eyebrow">WORKSPACE / OVERVIEW</p>
+                <h1>My Dashboard</h1>
+                <p class="subtitle">Plan your day. Make progress.</p>
+            </div>
+            <span class="avatar">V</span>
+        </header>
+
+        <section class="stats">
+            <article class="stat-card">
+                <p>Total Tasks</p>
+                <h2 id="totalTasks">0</h2>
+            </article>
+            <article class="stat-card">
+                <p>Pending</p>
+                <h2 id="pendingTasks">0</h2>
+            </article>
+            <article class="stat-card">
+                <p>Completed</p>
+                <h2 id="completedTasks">0</h2>
+            </article>
+        </section>
+
+        <section class="panel">
+            <h2>Add a new task</h2>
+            <form id="taskForm">
+                <label for="title">Task title</label>
+                <input id="title" type="text"
+                       placeholder="What do you need to do?" required>
+
+                <label for="description">Description</label>
+                <textarea id="description"
+                          placeholder="Add some details"></textarea>
+
+                <div class="form-row">
+                    <div>
+                        <label for="priority">Priority</label>
+                        <select id="priority">
+                            <option value="LOW">Low</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="HIGH" selected>High</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="dueDate">Due date</label>
+                        <input id="dueDate" type="date">
+                    </div>
+                </div>
+
+                <button type="submit">+ Add Task</button>
+                <p id="message" role="status"></p>
+            </form>
+        </section>
+
+        <section class="tasks-section">
+            <div class="section-heading">
+                <h2>My Tasks</h2>
+                <button id="refreshButton" class="secondary-button"
+                        type="button">Refresh</button>
+            </div>
+            <div id="taskList" class="task-list">
+                <p>Loading tasks...</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

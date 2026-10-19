@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | SmartTask</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; min-height: 100vh; display: grid; place-items: center;
+            background: #101827; color: #f8fafc;
+            font-family: Arial, sans-serif; padding: 20px;
+        }
+        .card {
+            width: 100%; max-width: 420px; background: #1e293b;
+            padding: 32px; border-radius: 16px;
+        }
+        h1 { margin-top: 0; }
+        p { color: #94a3b8; }
+        label { display: block; margin: 16px 0 7px; }
+        input {
+            width: 100%; padding: 12px; border-radius: 8px;
+            border: 1px solid #475569; background: #0f172a;
+            color: white; font-size: 15px;
+        }
+        button {
+            width: 100%; padding: 13px; margin-top: 22px;
+            border: 0; border-radius: 8px; background: #6366f1;
+            color: white; font-weight: bold; cursor: pointer;
+        }
+        #message { overflow-wrap: anywhere; }
+        a { color: #a5b4fc; }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <h1>Create your account</h1>
+        <p>Start organizing your tasks and habits.</p>
+
+        <form id="registerForm">
+            <label for="name">Full name</label>
+            <input id="name" name="name" maxlength="100" required>
+
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email"
+                   maxlength="150" required>
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password"
+                   minlength="8" maxlength="72" required>
+
+            <button type="submit">Create account</button>
+        </form>
+
+        <p id="message" role="status"></p>
+        <p>Already registered? <a href="/login.html">Sign in</a></p>
+    </main>
+
+    <script>
+        const form = document.getElementById("registerForm");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            message.textContent = "Creating your account...";
+
+            try {
+                const response = await fetch("/api/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        name: document.getElementById("name").value.trim(),
+                        email: document.getElementById("email").value.trim(),
+                        password: document.getElementById("password").value
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    message.textContent =
+                        data.error || "Registration failed. Check your details.";
+                    return;
+                }
+
+                message.textContent = "Account created! Redirecting to login...";
+                window.location.href = "/login.html";
+            } catch (error) {
+                message.textContent =
+                    "Could not connect to SmartTask. Check that the server is running.";
+            }
+        });
+    </script>
+</body>
+</html>
